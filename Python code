@@ -1,0 +1,96 @@
+MENU = {
+    "espresso": {
+        "ingredients": {
+            "water": 50,
+            "milk": 0,
+            "coffee": 18
+        },
+        "money": 1.5
+    },
+    "latte": {
+        "ingredients": {
+            "water": 200,
+            "milk": 150,
+            "coffee": 24
+        },
+        "money": 2.5
+    },
+    "cappuccino": {
+        "ingredients": {
+            "water": 250,
+            "milk": 100,
+            "coffee": 24
+        },
+        "money": 3.0
+    }
+}
+
+print(MENU["cappuccino"]["money"])
+
+
+
+current_resource =  {
+    "water": 100,
+    "milk": 50,
+    "coffee": 76,
+    "money": 2.5}
+
+is_on = True
+profit = 0
+
+def is_resource_sufficient(order_ingredients):
+    for item in order_ingredients:
+        if order_ingredients[item] > current_resource[item]:
+            print(f"sorry there is not enough {item}")
+            return False
+    return True
+
+def cal_drink_cost():
+    print("Please input coins")
+    total = int(input("Please insert quarter ")) * 0.25
+    total += int(input("Please insert dimes ")) * 0.10
+    total += int(input("Please insert nickels ")) * 0.05
+    total += int(input("Please insert pennies ")) * 0.01
+    return total
+
+def transaction_success():
+    print("Transaction successful")
+    current_resource["water"] -= MENU[choice]["ingredients"]["water"]
+    current_resource["milk"] -= MENU[choice]["ingredients"]["milk"]
+    current_resource["coffee"] -= MENU[choice]["ingredients"]["coffee"]
+    current_resource["money"] +=  drink_cost
+
+
+
+
+while is_on:
+    choice = input("What choice of drink you want to have ? ").strip().lower()
+    if choice == "off":
+        is_on = False
+    elif choice == "report":
+        print(current_resource)
+    else:
+        sufficient_resource = is_resource_sufficient(MENU[choice]["ingredients"])
+        if sufficient_resource:
+            cost_drink = cal_drink_cost()
+            drink_cost = MENU[choice]["money"]
+
+            if cost_drink < drink_cost:
+                print("Sorry not enough money. Money refunded.")
+            else:
+                change = round(cost_drink - drink_cost, 2)
+                if change > 0:
+                    print(f"Here is your ${change} in change.")
+                profit += drink_cost
+                transaction_success()
+                print(f"Here is your {choice}. Enjoy!")
+
+
+
+
+
+
+
+
+
+
